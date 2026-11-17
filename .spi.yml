@@ -1,0 +1,5 @@
+# Swift Package Index: the documentation to build from the package's doc comments
+version: 1
+builder:
+  configs:
+    - documentation_targets: [RealtimeBpmAnalyzer]
