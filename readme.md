@@ -38,7 +38,7 @@ no dependency and imports Foundation only: no Accelerate, no AVFoundation.
 ## Versions
 
 The version is the JS library's major and minor whose conformance vectors the port passes, plus its own patch:
-6.2.x reads the same as `realtime-bpm-analyzer` 6.2 on npm. A patch of the port can ship without a JS release.
+6.3.x reads the same as `realtime-bpm-analyzer` 6.3 on npm. A patch of the port can ship without a JS release.
 `from: "6.2.0"` takes any later 6.x.
 
 The code lives in [`packages/swift`](https://github.com/dlepaux/realtime-bpm-analyzer/tree/main/packages/swift) of
@@ -80,8 +80,9 @@ Both read the same; the buffer one saves a copy when the samples are already in 
 `AVAudioPCMBuffer`'s. The buffer is only read, and only during the call.
 
 - `samples`: one channel, from -1 to 1.
-- `sampleRate`: their rate in Hz. The tempogram needs at least 100 Hz; `peaks` at least 2 Hz, and more than twice
-  its lowpass cutoff.
+- `sampleRate`: their rate in Hz. The tempogram needs at least 122.97509238026915 Hz, the first rate at which its FFT
+  has a bin above DC (releases before this floor refused only under 100 Hz, and returned `nil` from there up to it); `peaks` at
+  least 2 Hz, and more than twice its lowpass cutoff.
 - `options`: `AnalysisOptions(engine:tempoRange:)`, every field with the JS library's default.
   - `engine`: `.tempogram`, the default, reads the full band. `.peaks` counts the intervals between bass peaks,
     after a lowpass: `.peaks` is `.peaks(lowpass: Lowpass(frequency: 200, q: 1))`, the cutoff in Hz and Q in dB as a
